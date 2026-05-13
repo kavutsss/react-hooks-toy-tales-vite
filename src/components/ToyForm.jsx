@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 
+/**
+ * ToyForm component that provides a form for creating new toys.
+ * Uses controlled inputs to manage form state and makes a POST request
+ * to the backend when the form is submitted.
+ */
 function ToyForm({ onAddToy }) {
+  // Controlled state for form inputs
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
 
+  // Handle form submission: create new toy object and send POST request
   function handleSubmit(e) {
     e.preventDefault();
     const newToy = {
       name: name,
       image: image,
-      likes: 0,
+      likes: 0, // Initialize new toys with 0 likes
     };
 
     fetch("http://localhost:3001/toys", {
@@ -22,6 +29,7 @@ function ToyForm({ onAddToy }) {
       .then((r) => r.json())
       .then((addedToy) => onAddToy(addedToy));
 
+    // Reset form fields after successful submission
     setName("");
     setImage("");
   }
