@@ -1,44 +1,69 @@
-# Practice Challenge: Toy Tales
+# Toy Tales - React Toy Collection App
 
-You've got a friend in need! Again!
+A React application that allows users to manage a collection of toys with full CRUD functionality. Users can view all toys, add new toys, like toys to increase their popularity, and donate (delete) toys they no longer want.
 
-Andy has misplaced of his toys (again) and need your help to organize them.
+## Features
+
+- **View All Toys**: Displays a collection of toys with their names, images, and like counts on page load
+- **Add New Toys**: Submit a form to create new toys with custom names and image URLs
+- **Like Toys**: Click the like button to increment a toy's likes count
+- **Donate Toys**: Remove toys from the collection by clicking the "Donate to GoodWill" button
+
+## Tech Stack
+
+- **Frontend**: React 19 with hooks (useState, useEffect)
+- **Backend**: json-server (RESTful API)
+- **Build Tool**: Vite
+- **Testing**: Vitest with React Testing Library
 
 ## Setup
 
-All the information about Andy's toys can be found in the `db.json` file. We'll
-be using `json-server` to create a RESTful API for our database.
+1. Install dependencies:
+```bash
+npm install
+```
 
-Run `npm install` to install our dependencies.
+2. Start the backend server (json-server):
+```bash
+npm run server
+```
+This starts the API at `http://localhost:3001`
 
-Then, run `npm run server` to start up `json-server` on `http://localhost:3001`.
+3. Start the React development server:
+```bash
+npm run dev
+```
+This starts the app at `http://localhost:5173`
 
-In another tab, run `npm run dev` to start up our React app at `http://localhost:3000`.
+4. Run the test suite:
+```bash
+npm run test
+```
 
-In another tab, run `npm run test` to run the test suite.
+## Component Architecture
 
-Before you start building out the application, the first step that you should
-take is to examint the current code and component hierarchy. This will tell you 
-how components can pass data to each other as well as where that information should 
-be stored.
+The application follows React best practices with state lifting and prop drilling:
 
-## Deliverables
+- **App**: Main component that manages the toys state and coordinates all CRUD operations
+- **ToyContainer**: Pass-through component that renders the collection of ToyCard components
+- **ToyCard**: Displays individual toy information with like and delete functionality
+- **ToyForm**: Controlled form component for creating new toys
+- **Header**: Displays the application header image
 
-- _When our application loads_, make a GET request to `/toys` to fetch the toy
-  array. Given your component tree, think about which component should be
-  responsible for the array. After you have put the data in the proper
-  component, your next job is to render the `ToyCard` components on the page.
+## API Endpoints
 
-- _When the `ToyForm` is submitted_, make a POST request to `/toys` to save a
-  new toy to the server. Using the ideas of controlled form and inverse data
-  flow, think about how to render a new `ToyCard` for the toy that you created.
+- `GET /toys` - Fetch all toys
+- `POST /toys` - Create a new toy
+- `PATCH /toys/:id` - Update a toy's likes
+- `DELETE /toys/:id` - Delete a toy
 
-- _When the `Donate to Goodwill` button is clicked_, make a DELETE request to
-  `/toys/:id` with the ID of the toy that was clicked to delete the toy from the
-  server. The `ToyCard` that you clicked on should also be removed from the DOM.
+## Screenshots
 
-- _When the like button is clicked_, make a PATCH request to `/toys/:id` with
-  the id of the toy that was clicked, along with the new number of likes (this
-  should be sent in the body of the PATCH request, as a object:
-  `{ likes: 10 }`), to update the toy on the server. Clicking on the button
-  should also increase the number of likes on the DOM.
+![Toy Tales Application](./screenshot.png)
+
+## Development Notes
+
+- State is managed in the App component following the "lifting state up" pattern
+- All API calls are made using the native fetch API
+- Form inputs are controlled components for better state management
+- The application maintains toy order when updating likes using array.map()
